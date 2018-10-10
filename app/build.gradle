@@ -1,0 +1,96 @@
+project.ext {
+    appcompat = "28.0.0"
+    arch = "1.1.1"
+    retrofit = "2.3.0"
+    constraintLayout = "1.1.3"
+    kotlin_version = "1.2.71"
+}
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+
+    signingConfigs {
+        release {
+            storeFile file("leroy_merlin_sign_key.jks")
+            storePassword "L3r0yM3rlin!\$"
+            keyAlias "appPersonam"
+            keyPassword "appP3rs0nam!\$"
+        }
+    }
+
+    compileSdkVersion 28
+    defaultConfig {
+        applicationId "skipcreative.it.MVVM"
+        minSdkVersion 19
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "API_URL_LOGIN", "\"http://10.9.76.8:3003/api/v1/\""
+            buildConfigField "String", "API_URL", "\"http://10.9.76.8:3005/api/v1/\""
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    project.ext { appName = 'venditaLibera' }
+                    def newName = output.outputFile.name
+                    newName = newName.replace("app-", "$project.ext.appName-") //"MyAppName" -> I set my app variables in the root project
+                    newName = newName.replace("-release", "-release-" + versionName)
+                    //noinspection GroovyAssignabilityCheck
+                    output.outputFileName = new File(output.outputFile.name.replace("app-release.apk", newName))
+                }
+            }
+            signingConfig signingConfigs.release
+
+        }
+        debug {
+            buildConfigField "String", "API_URL_LOGIN", "\"http://10.9.76.8:3003/api/v1/\""
+            buildConfigField "String", "API_URL", "\"https://jsonplaceholder.typicode.com/\""
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    project.ext { appName = 'venditaLibera' }
+                    def newName = output.outputFile.name
+                    newName = newName.replace("app-", "$project.ext.appName-") //"MyAppName" -> I set my app variables in the root project
+                    newName = newName.replace("-debug", "-debug-" + versionName)
+                    //noinspection GroovyAssignabilityCheck
+                    output.outputFileName = new File(output.outputFile.name.replace("app-debug.apk", newName))
+                }
+            }
+        }
+
+    }
+}
+
+dependencies {
+
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:cardview-v7:$project.appcompat"
+    implementation "com.android.support:recyclerview-v7:$project.appcompat"
+    implementation "android.arch.lifecycle:runtime:$project.arch"
+    implementation "android.arch.lifecycle:extensions:$project.arch"
+    implementation "com.squareup.retrofit2:retrofit:$project.retrofit"
+    implementation "com.squareup.retrofit2:converter-gson:$project.retrofit"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    annotationProcessor "android.arch.lifecycle:compiler:$project.arch"
+    implementation "com.android.support.constraint:constraint-layout:$project.constraintLayout"
+    implementation "com.android.support:support-v4:$project.appcompat"
+
+    testImplementation 'junit:junit:4.12'
+    implementation "com.android.support:design:$project.appcompat"
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'junit:junit:4.12'
+
+
+}
+repositories {
+    mavenCentral()
+}
