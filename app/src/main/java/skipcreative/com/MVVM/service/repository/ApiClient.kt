@@ -11,28 +11,28 @@ object ApiClient {
 
 
     var okHttpClient: OkHttpClient? = null
-    //private var loginRetrofit: Retrofit? = null
+    private var ledRetrofit: Retrofit? = null
     private var requestsRetrofit: Retrofit? = null
 
 
-   /* fun getLoginRetrofit(): Retrofit {
+    fun getLedRetrofit(): Retrofit {
 
-        if (loginRetrofit == null) {
+        if (ledRetrofit == null) {
             okHttpClient = OkHttpClient.Builder()
                     .connectTimeout(30, TimeUnit.SECONDS)
                     .writeTimeout(30, TimeUnit.SECONDS)
                     .readTimeout(30, TimeUnit.SECONDS)
                     .build()
 
-            loginRetrofit = Retrofit.Builder()
-                    .baseUrl(BuildConfig.API_URL)
+            ledRetrofit = Retrofit.Builder()
+                    .baseUrl(BuildConfig.API_LED_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(okHttpClient!!)
                     .build()
         }
-        return loginRetrofit!!
+        return ledRetrofit!!
 
-    }*/
+    }
 
     fun getRequestsRetrofit(): Retrofit {
 

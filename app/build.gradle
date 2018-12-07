@@ -8,6 +8,7 @@ project.ext {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
 
@@ -18,6 +19,9 @@ android {
             keyAlias "appPersonam"
             keyPassword "appP3rs0nam!\$"
         }
+    }
+    dataBinding {
+        enabled = true
     }
 
     compileSdkVersion 28
@@ -35,6 +39,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             buildConfigField "String", "API_URL_LOGIN", "\"http://10.9.76.8:3003/api/v1/\""
             buildConfigField "String", "API_URL", "\"http://10.9.76.8:3005/api/v1/\""
+            buildConfigField "String", "API_LED_URL", "\"http://192.168.1.5:3005/\""
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     project.ext { appName = 'venditaLibera' }
@@ -51,6 +56,8 @@ android {
         debug {
             buildConfigField "String", "API_URL_LOGIN", "\"http://10.9.76.8:3003/api/v1/\""
             buildConfigField "String", "API_URL", "\"https://jsonplaceholder.typicode.com/\""
+            buildConfigField "String", "API_LED_URL", "\"http://192.168.1.5:3005/\""
+
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     project.ext { appName = 'venditaLibera' }
